@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tenochtitlán - O Império no Lago: Guia Interativo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg-dark: #12100e;
+      --bg-card: #1c1815;
+      --bg-card-hover: #26211c;
+      --accent-gold: #e5a93b;
+      --accent-copper: #c86d3b;
+      --accent-jade: #2a8a71;
+      --accent-water: #388296;
+      --text-main: #f0e8dd;
+      --text-muted: #b8ac9e;
+      --border-color: #383028;
+      --font-title: 'Cinzel', serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-body);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* HEADER & HERO */
+    header {
+      background: linear-gradient(180deg, rgba(18,16,14,0.7) 0%, rgba(18,16,14,0.95) 100%),
+                  url('https://images.unsplash.com/photo-1518638150340-f706e86654de?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      border-bottom: 3px solid var(--accent-gold);
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent-copper);
+      color: #fff;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      margin-bottom: 1rem;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-family: var(--font-title);
+      color: var(--accent-gold);
+      font-size: 2.4rem;
+      line-height: 1.2;
+      margin-bottom: 0.8rem;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
+    }
+
+    header p {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 650px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* NAVIGATION */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(28, 24, 21, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-color);
+      display: flex;
+      overflow-x: auto;
+      padding: 0.5rem 1rem;
+      gap: 0.5rem;
+      scrollbar-width: none;
+    }
+    nav::-webkit-scrollbar { display: none; }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    nav a:hover, nav a.active {
+      background: var(--accent-gold);
+      color: var(--bg-dark);
+    }
+
+    /* CONTAINER & SECTIONS */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 2rem 1.2rem;
+    }
+
+    section {
+      margin-bottom: 3.5rem;
+      scroll-margin-top: 4rem;
+    }
+
+    .section-header {
+      margin-bottom: 1.8rem;
+      border-left: 4px solid var(--accent-gold);
+      padding-left: 0.8rem;
+    }
+
+    .section-header h2 {
+      font-family: var(--font-title);
+      color: var(--accent-gold);
+      font-size: 1.8rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
+
+    /* GRID & CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.2rem;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.4rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--accent-gold);
+    }
+
+    .card-icon {
+      font-size: 2rem;
+      margin-bottom: 0.8rem;
+      display: inline-block;
+    }
+
+    .card h3 {
+      font-family: var(--font-title);
+      color: #fff;
+      font-size: 1.2rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .card p {
+      color: var(--text-muted);
+      font-size: 0.93rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .tag-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      background: rgba(229, 169, 59, 0.15);
+      color: var(--accent-gold);
+      padding: 0.2rem 0.6rem;
+      border-radius: 6px;
+      align-self: flex-start;
+    }
+
+    /* TABBED SYSTEM FOR RECIPES & ITINERARY */
+    .filter-bar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.2rem;
+    }
+
+    .filter-btn {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 600;
+      transition: 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--accent-copper);
+      color: #fff;
+      border-color: var(--accent-copper);
+    }
+
+    /* RECIPE CARD SPECIFICS */
+    .recipe-card {
+      background: var(--bg-card);
+      border-left: 4px solid var(--accent-copper);
+    }
+
+    .recipe-meta {
+      background: rgba(0,0,0,0.25);
+      border-radius: 8px;
+      padding: 0.8rem;
+      margin: 0.8rem 0;
+      font-size: 0.88rem;
+    }
+
+    .recipe-meta strong {
+      color: var(--accent-gold);
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .curiosity-box {
+      background: rgba(42, 138, 113, 0.15);
+      border: 1px dashed var(--accent-jade);
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      color: #d1f2e8;
+      margin-top: 0.8rem;
+    }
+
+    /* SIMULATOR */
+    .sim-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      padding: 1.8rem;
+    }
+
+    .sim-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .input-group label {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .input-group input {
+      background: #12100e;
+      border: 1px solid var(--border-color);
+      color: #fff;
+      padding: 0.7rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .input-group input:focus {
+      border-color: var(--accent-gold);
+    }
+
+    .sim-results {
+      background: #12100e;
+      border-radius: 12px;
+      padding: 1.2rem;
+      border: 1px solid var(--accent-gold);
+    }
+
+    .res-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 0.9rem;
+    }
+
+    .res-row.total {
+      border-top: 2px solid var(--accent-gold);
+      border-bottom: none;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--accent-gold);
+      margin-top: 0.6rem;
+      padding-top: 0.8rem;
+    }
+
+    .disclaimer-text {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: 1rem;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* CHECKLIST */
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .check-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      padding: 0.9rem 1.1rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .check-item input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--accent-gold);
+      cursor: pointer;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1rem;
+      background: #0a0908;
+      border-top: 1px solid var(--border-color);
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+      .container { padding: 1.2rem 0.9rem; }
+      .sim-box { padding: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <span class="hero-badge">Guia Interativo de Viagem & História</span>
+    <h1>TENOCHTITLÁN</h1>
+    <p>Explore a lendária capital do Império Mexica no meio do lago Texcoco e planeje sua viagem pelo coração da atual Cidade do México!</p>
+  </header>
+
+  <!-- NAVEGAÇÃO -->
+  <nav id="navbar">
+    <a href="#historia" class="active">🏛️ História & Cultura</a>
+    <a href="#gastronomia">🌮 Sabores Astecas</a>
+    <a href="#roteiro">✈️ Guia de Viagem</a>
+    <a href="#simulador">🧮 Simulador R$</a>
+    <a href="#bagagem">🧳 O Que Levar</a>
+  </nav>
+
+  <div class="container">
+
+    <!-- SEÇÃO 1: HISTÓRIA E CULTURA -->
+    <section id="historia">
+      <div class="section-header">
+        <h2>🏛️ História e Vida em Tenochtitlán</h2>
+        <p>A incrível metrópole flutuante fundada pelos mexicas em 1325 e sua sociedade altamente organizada.</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div>
+            <span class="card-icon">🦅</span>
+            <h3>A Promessa do Águia</h3>
+            <p>Segundo a lenda, os mexicas caminharam anos em busca de um sinal divino de Huitzilopochtli: uma águia pousada num cacto devorando uma serpente. Encontraram esse símbolo em uma ilha no Lago Texcoco e ali ergueram Tenochtitlán.</p>
+          </div>
+          <span class="tag-badge">Origem & Fundação</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🌽</span>
+            <h3>Chinampas: Ilhas Cultiváveis</h3>
+            <p>Para produzir alimentos sobre a água, inventaram as <i>chinampas</i>: ilhas artificiais retangulares feitas com estivas de madeira, lama e vegetação. Produziam até 7 colheitas de milho e vegetais por ano sem depender da chuva!</p>
+          </div>
+          <span class="tag-badge">Engenharia Agrícola</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🛶</span>
+            <h3>Canais e Calçadas</h3>
+            <p>A cidade era cortada por canais de água onde milhares de canoas circulavam diariamente. Três grandes calçadas de pedra ligavam a ilha ao continente e podiam ser bloqueadas em caso de invasão militar.</p>
+          </div>
+          <span class="tag-badge">Infraestrutura</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🚰</span>
+            <h3>Aqueduto de Chapultepec</h3>
+            <p>Como a água do lago era salobra, construtores mexicas ergueram um aqueduto duplo de pedra que trazia água potável e cristalina direto das nascentes das colinas de Chapultepec até os chafarizes públicos.</p>
+          </div>
+          <span class="tag-badge">Saneamento</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🛍️</span>
+            <h3>Mercado de Tlatelolco</h3>
+            <p>O maior centro comercial das Américas na época. Mais de 60.000 pessoas se reuniam diariamente para trocar mercadorias sem moeda de papel: usavam sementes de cacau, tecidos de algodão e penas raras como forma de pagamento.</p>
+          </div>
+          <span class="tag-badge">Comércio</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🕌</span>
+            <h3>Templo Mayor e Religião</h3>
+            <p>O centro espiritual e geográfico da cidade. Uma pirâmide dupla monumental dedicada a dois deuses principais: Tlaloc (Deus da Chuva) e Huitzilopochtli (Deus do Sol e da Guerra).</p>
+          </div>
+          <span class="tag-badge">Espiritualidade</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🐆</span>
+            <h3>Guerreiros Águia e Jaguar</h3>
+            <p>A sociedade valorizava a disciplina militar. Guerreiros destacados ganhavam acesso às ordens de elite (Águia e Jaguar), vestindo peles autênticas e elmos esculpidos. O objetivo na batalha era capturar oponentes vivos para rituais.</p>
+          </div>
+          <span class="tag-badge">Sociedade & Exército</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🥋</span>
+            <h3>Roupas e Cotidiano</h3>
+            <p>O povo comum usava mantas simples de fibra de agave (<i>tilmatli</i>) e tangas de algodão. Nobres vestiam mantas coloridas e ornamentos de jade e plumas de quetzal. A higiene era diária, com banhos frequentes de vapor (<i>temazcal</i>).</p>
+          </div>
+          <span class="tag-badge">Vida Prática</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 2: COMIDAS E RECEITAS -->
+    <section id="gastronomia">
+      <div class="section-header">
+        <h2>🌮 Sabores e Receitas Mesoamericanas</h2>
+        <p>A base alimentar dos mexicas: ingredientes frescos, pimentas, grãos sagrados e pratos tradicionais para você conhecer (e até preparar em casa!).</p>
+      </div>
+
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterRecipes('all')">Todas as Receitas</button>
+        <button class="filter-btn" onclick="filterRecipes('milho')">Milho & Grãos</button>
+        <button class="filter-btn" onclick="filterRecipes('bebidas')">Bebidas</button>
+        <button class="filter-btn" onclick="filterRecipes('proteinas')">Proteínas & Especiais</button>
+      </div>
+
+      <div class="grid" id="recipes-grid">
+
+        <!-- TAMALES -->
+        <div class="card recipe-card" data-category="milho">
+          <div>
+            <span class="card-icon">🫔</span>
+            <h3>Tamales Tradicionais</h3>
+            <p>A famosa "marmita" dos mexicas! Massa de milho temperada cozida no vapor enrolada na própria palha do milho.</p>
+
+            <div class="recipe-meta">
+              <strong>📝 Ingredientes:</strong>
+              • 2 xícaras de farinha de milho nixtamalizada<br>
+              • 1 xícara de caldo de legumes ou frango<br>
+              • Sal, pimenta e recheio de feijão temperado ou peru desfiado<br>
+              • Palhas de milho secas e amolecidas em água morna
+            </div>
+
+            <div class="recipe-meta">
+              <strong>👨‍🍳 Como Preparar:</strong>
+              1. Misture a farinha com o caldo até formar uma massa macia.<br>
+              2. Espalhe a massa sobre a palha de milho úmida e coloque o recheio no centro.<br>
+              3. Dobre a palha fechando as pontas e cozinhe no vapor por cerca de 45 minutos.
+            </div>
+          </div>
+          <div class="curiosity-box">
+            💡 <strong>Curiosidade Histórica:</strong> Era o alimento prático levado pelos guerreiros em expedições militares longas porque a palha protegia a comida da poeira.
+          </div>
+        </div>
+
+        <!-- GUACAMOLE MEXICA -->
+        <div class="card recipe-card" data-category="proteinas">
+          <div>
+            <span class="card-icon">🥑</span>
+            <h3>Ahuacamolli (Guacamole Ancestral)</h3>
+            <p>Uma pasta cremosa e refrescante de abacate com tomate e pimentas moscadas no pilão de pedra (Molcajete).</p>
+
+            <div class="recipe-meta">
+              <strong>📝 Ingredientes:</strong>
+              • 2 abacates maduros<br>
+              • 1 tomate maduro picado<br>
+              • Pimenta malagueta ou jalapeño a gosto<br>
+              • Coentro e uma pitada de sal marinho
+            </div>
+
+            <div class="recipe-meta">
+              <strong>👨‍🍳 Como Preparar:</strong>
+              1. No pilão ou tigela, amasse o abacate sem transformar em purê líquido.<br>
+              2. Adicione o tomate picado e a pimenta bem moída.<br>
+              3. Misture o coentro fresco e ajuste o sal. Sirva com tortillas quentinhas.
+            </div>
+          </div>
+          <div class="curiosity-box">
+            💡 <strong>Curiosidade Histórica:</strong> A palavra vem do náuatle <i>Ahuacatl</i> (abacate) + <i>Molli</i> (molho). Não levava limão na época asteca, pois o limão veio da Europa depois!
+          </div>
+        </div>
+
+        <!-- ATOLE -->
+        <div class="card recipe-card" data-category="bebidas">
+          <div>
+            <span class="card-icon">🍵</span>
+            <h3>Atole de Milho e Baunilha</h3>
+            <p>Uma bebida quente, cremosa e altamente nutritiva consumida todas as manhãs por todas as classes sociais.</p>
+
+            <div class="recipe-meta">
+              <strong>📝 Ingredientes:</strong>
+              • 1/2 xícara de massa de milho fina<br>
+              • 2 xícaras de água<br>
+              • 1 colher de mel de agave<br>
+              • 1 fava de baunilha natural ou canela
+            </div>
+
+            <div class="recipe-meta">
+              <strong>👨‍🍳 Como Preparar:</strong>
+              1. Dissolva a massa de milho na água fria.<br>
+              2. Leve ao fogo brando mexendo sempre até engrossar.<br>
+              3. Adoce com mel de agave e aromatize com a baunilha antes de servir quente.
+            </div>
+          </div>
+          <div class="curiosity-box">
+            💡 <strong>Curiosidade Histórica:</strong> O atole era considerado um fortificante natural oferecido para crianças, doentes e trabalhadores braçais antes de irem para as chinampas.
+          </div>
+        </div>
+
+        <!-- XOCOLATL (CHOCOLATE ASTECA) -->
+        <div class="card recipe-card" data-category="bebidas">
+          <div>
+            <span class="card-icon">🍫</span>
+            <h3>Xocolatl (Chocolate Apimentado)</h3>
+            <p>A bebida sagrada dos nobres e imperadores, servida fria, amarga, apimentada e com muita espuma.</p>
+
+            <div class="recipe-meta">
+              <strong>📝 Ingredientes:</strong>
+              • 2 colheres de cacau 100% puro em pó<br>
+              • 2 xícaras de água fervente<br>
+              • 1 pitada de pimenta em pó (chilli)<br>
+              • 1 pitada de baunilha e mel de agave a gosto
+            </div>
+
+            <div class="recipe-meta">
+              <strong>👨‍🍳 Como Preparar:</strong>
+              1. Misture o cacau na água bem quente até dissolver completamente.<br>
+              2. Adicione a pimenta e a baunilha.<br>
+              3. Bata vigorosamente com um batedor para criar uma camada espessa de espuma.
+            </div>
+          </div>
+          <div class="curiosity-box">
+            💡 <strong>Curiosidade Histórica:</strong> As sementes de cacau eram tão valiosas que serviam literalmente como dinheiro para comprar mercadorias no mercado!
+          </div>
+        </div>
+
+        <!-- POZOLE -->
+        <div class="card recipe-card" data-category="proteinas">
+          <div>
+            <span class="card-icon">🍲</span>
+            <h3>Pozole Tradicional de Milho</h3>
+            <p>Um ensopado rico com grãos gigantes de milho (cacahuazintle) e carnes bem temperadas com pimentas locais.</p>
+
+            <div class="recipe-meta">
+              <strong>📝 Ingredientes:</strong>
+              • 2 xícaras de milho para pozole pré-cozido<br>
+              • 300g de carne de peru ou frango desfiado<br>
+              • Molho de pimentas secas (guajillo), orégano e alho<br>
+              • Rabanete e alface fatiados para finalizar
+            </div>
+
+            <div class="recipe-meta">
+              <strong>👨‍🍳 Como Preparar:</strong>
+              1. Cozinhe o milho na água até os grãos abrirem como flores.<br>
+              2. Junte a carne cozida e o caldo de pimentas secas coado.<br>
+              3. Deixe apurar por 20 minutos e sirva com rabanete crocante por cima.
+            </div>
+          </div>
+          <div class="curiosity-box">
+            💡 <strong>Curiosidade Histórica:</strong> Era um prato cerimonial servido aos sacerdotes e líderes comunitários durante grandes festejos religiosos no Templo Mayor.
+          </div>
+        </div>
+
+        <!-- TORTILLAS DE MILHO -->
+        <div class="card recipe-card" data-category="milho">
+          <div>
+            <span class="card-icon">🫓</span>
+            <h3>Tortillas de Milho Nixtamalizado</h3>
+            <p>A base de qualquer refeição asteca. Um pão achatado, fino e macio feito exclusivamente de milho e água.</p>
+
+            <div class="recipe-meta">
+              <strong>📝 Ingredientes:</strong>
+              • 2 xícaras de farinha de milho nixtamalizada (masa harina)<br>
+              • 1 xícara e meia de água morna<br>
+              • 1 pitada de sal
+            </div>
+
+            <div class="recipe-meta">
+              <strong>👨‍🍳 Como Preparar:</strong>
+              1. Misture a farinha e a água até obter uma massa maleável.<br>
+              2. Faça pequenas bolinhas e achate com as mãos ou uma prensa.<br>
+              3. Asse em uma frigideira seca e bem quente por 1 a 2 minutos de cada lado.
+            </div>
+          </div>
+          <div class="curiosity-box">
+            💡 <strong>Curiosidade Histórica:</strong> Os mexicas usavam a tortilla como prato, colher e alimento ao mesmo tempo!
+          </div>
+        </div>
+
+      </div>
+      <p class="disclaimer-text">* Nota histórica: As receitas acima são adaptações modernas fiéis com ingredientes disponíveis na época mesoamericana.</p>
+    </section>
+
+    <!-- SEÇÃO 3: GUIA DE VIAGEM -->
+    <section id="roteiro">
+      <div class="section-header">
+        <h2>✈️ Guia de Viagem: Cidade do México & Tenochtitlán</h2>
+        <p>Planeje sua jornada ao Centro Histórico, exatamente onde ficava a antiga capital mexica!</p>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <div>
+            <span class="card-icon">🏨</span>
+            <h3>Onde Ficar (Centro Histórico)</h3>
+            <p>Se hospedar perto do Zócalo permite ir a pé ao Templo Mayor e aos principais museus.</p>
+            <p>• <strong>Hotel Histórico Central:</strong> R$ 420,00 / noite (Excelente conforto)<br>
+               • <strong>Zócalo Central Hotel:</strong> R$ 510,00 / noite (Vista para a praça principal)<br>
+               • <strong>Hostel Viajero Centro:</strong> R$ 110,00 / noite (Opção econômica)</p>
+          </div>
+          <span class="tag-badge">Hospedagem</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🍽️</span>
+            <h3>Restaurantes e Alimentação</h3>
+            <p>Experimente pratos típicos no coração da cidade com preços acessíveis.</p>
+            <p>• <strong>Restaurante El Cardenal:</strong> R$ 75,00 por refeição completa<br>
+               • <strong>Taquerías tradicionais do centro:</strong> R$ 25,00 a R$ 40,00 por refeição<br>
+               • <strong>Café de Tacuba:</strong> R$ 60,00 por lanche com chocolate quente</p>
+          </div>
+          <span class="tag-badge">Alimentação R$</span>
+        </div>
+
+        <div class="card">
+          <div>
+            <span class="card-icon">🗺️</span>
+            <h3>Passeios Imperdíveis</h3>
+            <p>Locais históricos essenciais na sua visita:</p>
+            <p>• <strong>Museu do Templo Mayor:</strong> R$ 28,00 (Entrada)<br>
+               • <strong>Museu Nacional de Antropologia:</strong> R$ 28,00 (O mais completo do mundo)<br>
+               • <strong>Passeio de Canoa em Xochimilco (Chinampas):</strong> R$ 120,00 por trajeto de barco</p>
+          </div>
+          <span class="tag-badge">Atrações R$</span>
+        </div>
+      </div>
+
+      <!-- SUGGESTED ITINERARIES -->
+      <div style="margin-top: 2rem;">
+        <h3 style="color: var(--accent-gold); font-family: var(--font-title); margin-bottom: 1rem;">🗓️ Sugestões de Roteiro</h3>
+        
+        <div class="grid">
+          <div class="card" style="border-top: 3px solid var(--accent-jade);">
+            <h3>Roteiro Rápido: 3 Dias</h3>
+            <p>• <strong>Dia 1:</strong> Zócalo, Ruínas do Templo Mayor e Catedral Metropolitana.<br>
+               • <strong>Dia 2:</strong> Museu Nacional de Antropologia e Bosque de Chapultepec.<br>
+               • <strong>Dia 3:</strong> Passeio em Xochimilco para ver as últimas Chinampas originais e provar tamales locais.</p>
+          </div>
+
+          <div class="card" style="border-top: 3px solid var(--accent-gold);">
+            <h3>Roteiro Completo: 7 Dias</h3>
+            <p>• <strong>Dias 1 a 3:</strong> Todo o circuito do Centro Histórico, Templo Mayor e Museus de Antropologia.<br>
+               • <strong>Dia 4:</strong> Bate e volta para a monumental Teotihuacán.<br>
+               • <strong>Dia 5:</strong> Navegação de gôndola/trajinera em Xochimilco e Museu Dolores Olmedo.<br>
+               • <strong>Dias 6 e 7:</strong> Mercados tradicionais de Coyoacán e gastronomia mesoamericana.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 4: SIMULADOR DE CUSTOS -->
+    <section id="simulador">
+      <div class="section-header">
+        <h2>🧮 Simulador de Custos da Viagem (em R$)</h2>
+        <p>Calcule os custos estimados para sua expedição sem se preocupar com moedas estrangeiras.</p>
+      </div>
+
+      <div class="sim-box">
+        <div class="sim-grid">
+          <div class="input-group">
+            <label>👥 Número de Pessoas</label>
+            <input type="number" id="sim-pessoas" value="2" min="1" oninput="calcularViagem()">
+          </div>
+
+          <div class="input-group">
+            <label>🌙 Número de Noites</label>
+            <input type="number" id="sim-noites" value="5" min="1" oninput="calcularViagem()">
+          </div>
+
+          <div class="input-group">
+            <label>✈️ Passagem Aérea (por pessoa) R$</label>
+            <input type="number" id="sim-passagem" value="3200" oninput="calcularViagem()">
+          </div>
+
+          <div class="input-group">
+            <label>🏨 Hotel (diária por quarto) R$</label>
+            <input type="number" id="sim-hotel" value="380" oninput="calcularViagem()">
+          </div>
+
+          <div class="input-group">
+            <label>🍽️ Alimentação (por pessoa/dia) R$</label>
+            <input type="number" id="sim-alimentacao" value="120" oninput="calcularViagem()">
+          </div>
+
+          <div class="input-group">
+            <label>🎟️ Passeios (total por pessoa) R$</label>
+            <input type="number" id="sim-passeios" value="250" oninput="calcularViagem()">
+          </div>
+
+          <div class="input-group">
+            <label>🚕 Transporte (total por pessoa) R$</label>
+            <input type="number" id="sim-transporte" value="150" oninput="calcularViagem()">
+          </div>
+
+          <div class="input-group">
+            <label>🛡️ Seguro Viagem (por pessoa) R$</label>
+            <input type="number" id="sim-seguro" value="110" oninput="calcularViagem()">
+          </div>
+        </div>
+
+        <div class="sim-results">
+          <div class="res-row">
+            <span>Passagens Aéreas Totais:</span>
+            <strong id="res-passagens">R$ 0,00</strong>
+          </div>
+          <div class="res-row">
+            <span>Hospedagem Total:</span>
+            <strong id="res-hospedagem">R$ 0,00</strong>
+          </div>
+          <div class="res-row">
+            <span>Alimentação Total:</span>
+            <strong id="res-alimentacao">R$ 0,00</strong>
+          </div>
+          <div class="res-row">
+            <span>Passeios & Ingressos:</span>
+            <strong id="res-passeios">R$ 0,00</strong>
+          </div>
+          <div class="res-row">
+            <span>Transporte Local:</span>
+            <strong id="res-transporte">R$ 0,00</strong>
+          </div>
+          <div class="res-row">
+            <span>Seguro Viagem:</span>
+            <strong id="res-seguro">R$ 0,00</strong>
+          </div>
+
+          <div class="res-row total">
+            <span>TOTAL ESTIMADO DA VIAGEM:</span>
+            <span id="res-total">R$ 0,00</span>
+          </div>
+        </div>
+
+        <p class="disclaimer-text">Os valores em reais são aproximados e podem mudar conforme o câmbio, a data e o estabelecimento.</p>
+      </div>
+    </section>
+
+    <!-- SEÇÃO 5: O QUE LEVAR & DOCUMENTOS -->
+    <section id="bagagem">
+      <div class="section-header">
+        <h2>🧳 O Que Levar e Requisitos de Entrada</h2>
+        <p>Marque os itens da sua lista para garantir uma viagem tranquila sem esquecer nada importante.</p>
+      </div>
+
+      <div class="checklist-grid">
+        <label class="check-item">
+          <input type="checkbox">
+          <span>📖 Passaporte Válido (mínimo 6 meses)</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span>📄 Visto Mexicano ou Visto Americano Válido</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span>✈️ Passagens de Volta Confirmadas</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span>🏨 Comprovante de Reserva do Hotel</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span>🛡️ Apólice de Seguro Viagem Impressa</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span>💳 Cartão de Crédito Internacional e Dinheiro</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span>👨‍👩‍👧 Autorização Notarizada para Menores (se desacompanhados de um dos pais)</span>
+        </label>
+
+        <label class="check-item">
+          <input type="checkbox">
+          <span>👟 Calçados Confortáveis para Caminhar nas Ruínas</span>
+        </label>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Guia Interativo de Tenochtitlán & Cidade do México • Trabalho Escolar de História</p>
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // SIMULADOR DE VIAGEM EM R$
+    function calcularViagem() {
+      const pessoas = parseFloat(document.getElementById('sim-pessoas').value) || 0;
+      const noites = parseFloat(document.getElementById('sim-noites').value) || 0;
+      const passagem = parseFloat(document.getElementById('sim-passagem').value) || 0;
+      const hotel = parseFloat(document.getElementById('sim-hotel').value) || 0;
+      const alimentacao = parseFloat(document.getElementById('sim-alimentacao').value) || 0;
+      const passeios = parseFloat(document.getElementById('sim-passeios').value) || 0;
+      const transporte = parseFloat(document.getElementById('sim-transporte').value) || 0;
+      const seguro = parseFloat(document.getElementById('sim-seguro').value) || 0;
+
+      const totalPassagens = pessoas * passagem;
+      const totalHospedagem = noites * hotel; // Considera valor por quarto
+      const totalAlimentacao = pessoas * noites * alimentacao;
+      const totalPasseios = pessoas * passeios;
+      const totalTransporte = pessoas * transporte;
+      const totalSeguro = pessoas * seguro;
+
+      const totalGeral = totalPassagens + totalHospedagem + totalAlimentacao + totalPasseios + totalTransporte + totalSeguro;
+
+      const fmt = (val) => val.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
+      document.getElementById('res-passagens').innerText = fmt(totalPassagens);
+      document.getElementById('res-hospedagem').innerText = fmt(totalHospedagem);
+      document.getElementById('res-alimentacao').innerText = fmt(totalAlimentacao);
+      document.getElementById('res-passeios').innerText = fmt(totalPasseios);
+      document.getElementById('res-transporte').innerText = fmt(totalTransporte);
+      document.getElementById('res-seguro').innerText = fmt(totalSeguro);
+      document.getElementById('res-total').innerText = fmt(totalGeral);
+    }
+
+    // FILTRO DE RECEITAS
+    function filterRecipes(category) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+
+      const cards = document.querySelectorAll('.recipe-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // DESTACAR ABA DA NAVEGAÇÃO AO ROLAR
+    window.addEventListener('scroll', () => {
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('nav a');
+      
+      let current = '';
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 100;
+        if (pageYOffset >= top) {
+          current = sec.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Inicializar cálculo ao carregar a página
+    document.addEventListener('DOMContentLoaded', calcularViagem);
+  </script>
+</body>
+</html>
